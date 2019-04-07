@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  shopping-cart-service:
+    image: shoppingcart/shopping-cart-service:0.0.1-SNAPSHOT
+    build:
+        context: ./shopping-cart-service/target/docker
+        dockerfile: Dockerfile
+    ports:
+      - 8100:8100
+    depends_on:
+      - shoppingcart_db
+    links:
+      - shoppingcart_db:shoppingcart_db
+
+  shoppingcart_db:
+    image: postgres
+    container_name: shoppingcart_db
+    restart: always
+    environment:
+      POSTGRES_USER: shoppingcart
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: shoppingcart
+    ports:
+      - 5432:5432
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  sql:

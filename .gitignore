@@ -1,0 +1,12 @@
+*.class
+*.log
+*.iml
+*.ser
+
+target/
+log/
+.idea/
+.mvn/
+.classpath
+.project
+.settings/
