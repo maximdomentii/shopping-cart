@@ -5,6 +5,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -14,7 +16,7 @@ public class Product implements Serializable {
 
     @Id
     @GeneratedValue
-    private long id;
+    private long productId;
 
     @Column(unique = true)
     @GeneratedValue
@@ -30,12 +32,20 @@ public class Product implements Serializable {
 
     private boolean available;
 
-    public long getId() {
-        return id;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "product_discount_rule_mapping",
+            joinColumns = { @JoinColumn(name = "product_id")},
+            inverseJoinColumns = { @JoinColumn(name = "discount_rule_id")}
+    )
+    private Set<DiscountRule> discountRules = new HashSet<>();
+
+    public long getProductId() {
+        return productId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 
     public long getBarcode() {
@@ -68,5 +78,13 @@ public class Product implements Serializable {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public Set<DiscountRule> getDiscountRules() {
+        return discountRules;
+    }
+
+    public void setDiscountRules(Set<DiscountRule> discountRules) {
+        this.discountRules = discountRules;
     }
 }
