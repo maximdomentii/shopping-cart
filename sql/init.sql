@@ -7,6 +7,7 @@ CREATE TABLE "public"."product"
    available bool NOT NULL
 )
 ;
+create index productbarcode_idx on product (barcode);
 
 insert into product values
   (1, 6309095275545, 'Apple', 0.25, true),
@@ -22,7 +23,7 @@ CREATE TABLE "public"."discount_rule"
    discount_rule_id bigint PRIMARY KEY NOT NULL,
    description varchar(255) NOT NULL,
    number_of_items integer NOT NULL,
-   discout_percentage float NOT NULL,
+   discount_percentage float NOT NULL,
    enable bool NOT NULL
 )
 ;

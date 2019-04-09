@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    public Product getProductByBarcode(long barcode);
+    Product getProductByBarcode(long barcode);
 }

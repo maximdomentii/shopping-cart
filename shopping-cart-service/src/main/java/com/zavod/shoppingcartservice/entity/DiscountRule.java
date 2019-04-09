@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -21,7 +22,7 @@ public class DiscountRule implements Serializable {
 
     private int numberOfItems;
 
-    private double discoutPercentage;
+    private double discountPercentage;
 
     private boolean enable;
 
@@ -52,12 +53,12 @@ public class DiscountRule implements Serializable {
         this.numberOfItems = numberOfItems;
     }
 
-    public double getDiscoutPercentage() {
-        return discoutPercentage;
+    public double getDiscountPercentage() {
+        return discountPercentage;
     }
 
-    public void setDiscoutPercentage(double discoutPercentage) {
-        this.discoutPercentage = discoutPercentage;
+    public void setDiscountPercentage(double discountPercentage) {
+        this.discountPercentage = discountPercentage;
     }
 
     public boolean isEnable() {
@@ -66,5 +67,26 @@ public class DiscountRule implements Serializable {
 
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DiscountRule)) return false;
+        DiscountRule that = (DiscountRule) o;
+        return discountRuleId == that.discountRuleId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(discountRuleId);
     }
 }

@@ -19,7 +19,6 @@ public class Product implements Serializable {
     private long productId;
 
     @Column(unique = true)
-    @GeneratedValue
     private long barcode;
 
     @NotEmpty

@@ -1,7 +1,7 @@
 package com.zavod.shoppingcartservice.controller;
 
 import com.zavod.shoppingcartservice.model.ReceiptDetails;
-import com.zavod.shoppingcartservice.service.ShoppingBasketService;
+import com.zavod.shoppingcartservice.service.ShoppingCartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +14,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
-public class ShoppingBasketController {
+public class ShoppingCartController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ShoppingBasketController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShoppingCartController.class);
 
     @Autowired
-    private ShoppingBasketService shoppingBasketService;
+    private ShoppingCartService shoppingBasketService;
 
     @GetMapping("/receipt")
-    public ReceiptDetails getReceiptDetails(@RequestParam List<Long> items){
-        LOGGER.info("Received getReceiptDetails request for a list of {} items", items.size());
+    public ReceiptDetails getReceiptDetails(@RequestParam List<Long> barcodes){
+        LOGGER.info("Received getReceiptDetails request for a list of {} barcodes", barcodes.size());
 
-        return shoppingBasketService.getReceiptDetails(items);
+        return shoppingBasketService.getReceiptDetails(barcodes);
     }
 }

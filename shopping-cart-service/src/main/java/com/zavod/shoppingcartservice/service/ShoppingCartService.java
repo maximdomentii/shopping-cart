@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface ShoppingBasketService {
+public interface ShoppingCartService {
 
-    ReceiptDetails getReceiptDetails(List<Long> items);
+    ReceiptDetails getReceiptDetails(List<Long> barcodes);
 }
