@@ -2,7 +2,8 @@ package com.zavod.shoppingcartservice.service.impl;
 
 import com.zavod.shoppingcartservice.entity.Product;
 import com.zavod.shoppingcartservice.exception.NotFoundException;
-import com.zavod.shoppingcartservice.model.ReceiptDetails;
+import com.zavod.shoppingcartservice.model.CheckProductResponse;
+import com.zavod.shoppingcartservice.model.ReceiptDetailsResposne;
 import com.zavod.shoppingcartservice.model.ReceiptProduct;
 import com.zavod.shoppingcartservice.repository.ProductRepository;
 import com.zavod.shoppingcartservice.service.ShoppingCartService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -20,8 +22,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ProductRepository productRepository;
 
     @Override
-    public ReceiptDetails getReceiptDetails(List<Long> barcodes) {
-        ReceiptDetails receiptDetails = new ReceiptDetails();
+    public ReceiptDetailsResposne getReceiptDetails(List<Long> barcodes) {
+        ReceiptDetailsResposne receiptDetailsResposne = new ReceiptDetailsResposne();
 
         Map<Long, ProductWithCty> productMap = getProductMapFromListOfRepetedBarcodes(barcodes);
 
@@ -35,9 +37,30 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             } else {
                 receiptProduct = new ReceiptProduct(product.getName(), cty, product.getPricePerUM());
             }
-            receiptDetails.addProduct(receiptProduct);
+            receiptDetailsResposne.addProduct(receiptProduct);
         }
-        return receiptDetails;
+        return receiptDetailsResposne;
+    }
+
+    @Override
+    public CheckProductResponse checkProduct(long barcode) {
+        Product product = getProductByBarcode(barcode);
+
+        CheckProductResponse checkProductResponse = new CheckProductResponse();
+        checkProductResponse.setBarcode(product.getBarcode());
+        checkProductResponse.setName(product.getName());
+        checkProductResponse.setAvailable(product.isAvailable());
+        return checkProductResponse;
+    }
+
+    private Product getProductByBarcode(long barcode) {
+        Optional<Product> productOptional = productRepository.getProductByBarcode(barcode);
+
+        if (!productOptional.isPresent() || !productOptional.get().isAvailable()){
+            throw new NotFoundException("No available product for barcode " + barcode);
+        } else {
+            return productOptional.get();
+        }
     }
 
     private Map<Long, ProductWithCty> getProductMapFromListOfRepetedBarcodes(List<Long> barcodes){
@@ -46,12 +69,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             if (productMap.containsKey(barcode)){
                 productMap.get(barcode).incrementCty();
             } else {
-                Product product = productRepository.getProductByBarcode(barcode);
-
-                if (product == null || !product.isAvailable()){
-                    throw new NotFoundException("No available product for barcode " + barcode);
-                }
-
+                Product product = getProductByBarcode(barcode);
                 productMap.put(barcode, new ProductWithCty(product));
             }
         }

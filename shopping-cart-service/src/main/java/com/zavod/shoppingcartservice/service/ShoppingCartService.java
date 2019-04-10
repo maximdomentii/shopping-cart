@@ -1,11 +1,13 @@
 package com.zavod.shoppingcartservice.service;
 
-import com.zavod.shoppingcartservice.model.ReceiptDetails;
-import org.springframework.stereotype.Service;
+import com.zavod.shoppingcartservice.model.CheckProductResponse;
+import com.zavod.shoppingcartservice.model.ReceiptDetailsResposne;
 
 import java.util.List;
 
 public interface ShoppingCartService {
 
-    ReceiptDetails getReceiptDetails(List<Long> barcodes);
+    ReceiptDetailsResposne getReceiptDetails(List<Long> barcodes);
+
+    CheckProductResponse checkProduct(long barcode);
 }

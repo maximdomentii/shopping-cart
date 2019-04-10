@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ReceiptDetails {
+public class ReceiptDetailsResposne {
 
     private Map<String, ReceiptProduct> productsMap;
     private BigDecimal subTotal;
     private BigDecimal totalDiscount;
     private BigDecimal total;
 
-    public ReceiptDetails(){
+    public ReceiptDetailsResposne(){
         this.productsMap = new HashMap<>();
         this.subTotal = BigDecimal.ZERO;
         this.total = BigDecimal.ZERO;
@@ -45,7 +45,7 @@ public class ReceiptDetails {
 
     @Override
     public String toString() {
-        return "ReceiptDetails{" +
+        return "ReceiptDetailsResposne{" +
                 "products=" + getProducts() + ", " +
                 "subTotal=" + subTotal + ", " +
                 "totalDiscount=" + totalDiscount + ", " +
