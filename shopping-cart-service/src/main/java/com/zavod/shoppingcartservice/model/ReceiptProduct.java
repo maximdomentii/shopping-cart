@@ -38,9 +38,11 @@ public class ReceiptProduct {
         this.discountMap = new HashMap<>();
 
         for (DiscountRule discountRule : discountRules){
-            ReceiptProductDiscount receiptProductDiscount = new ReceiptProductDiscount(discountRule.getDescription());
-            receiptProductDiscount.setDiscountedAmount(getDiscountedAmount(discountRule));
-            this.discountMap.put(discountRule, receiptProductDiscount);
+            if (discountRule.isEnable()) {
+                ReceiptProductDiscount receiptProductDiscount = new ReceiptProductDiscount(discountRule.getDescription());
+                receiptProductDiscount.setDiscountedAmount(getDiscountedAmount(discountRule));
+                this.discountMap.put(discountRule, receiptProductDiscount);
+            }
         }
     }
 

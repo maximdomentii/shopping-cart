@@ -1,7 +1,7 @@
 package com.zavod.shoppingcartservice.controller;
 
 import com.zavod.shoppingcartservice.model.CheckProductResponse;
-import com.zavod.shoppingcartservice.model.ReceiptDetailsResposne;
+import com.zavod.shoppingcartservice.model.ReceiptDetailsResponse;
 import com.zavod.shoppingcartservice.service.ShoppingCartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
 
     @GetMapping("/receipt")
-    public ReceiptDetailsResposne getReceiptDetails(@RequestParam List<Long> barcodes){
+    public ReceiptDetailsResponse getReceiptDetails(@RequestParam List<Long> barcodes){
         LOGGER.info("Received getReceiptDetails request for a list of {} barcodes", barcodes.size());
 
         return shoppingCartService.getReceiptDetails(barcodes);

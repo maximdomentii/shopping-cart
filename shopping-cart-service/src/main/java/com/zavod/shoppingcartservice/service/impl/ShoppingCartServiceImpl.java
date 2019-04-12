@@ -3,7 +3,7 @@ package com.zavod.shoppingcartservice.service.impl;
 import com.zavod.shoppingcartservice.entity.Product;
 import com.zavod.shoppingcartservice.exception.NotFoundException;
 import com.zavod.shoppingcartservice.model.CheckProductResponse;
-import com.zavod.shoppingcartservice.model.ReceiptDetailsResposne;
+import com.zavod.shoppingcartservice.model.ReceiptDetailsResponse;
 import com.zavod.shoppingcartservice.model.ReceiptProduct;
 import com.zavod.shoppingcartservice.repository.ProductRepository;
 import com.zavod.shoppingcartservice.service.ShoppingCartService;
@@ -22,8 +22,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ProductRepository productRepository;
 
     @Override
-    public ReceiptDetailsResposne getReceiptDetails(List<Long> barcodes) {
-        ReceiptDetailsResposne receiptDetailsResposne = new ReceiptDetailsResposne();
+    public ReceiptDetailsResponse getReceiptDetails(List<Long> barcodes) {
+        ReceiptDetailsResponse receiptDetailsResponse = new ReceiptDetailsResponse();
 
         Map<Long, ProductWithCty> productMap = getProductMapFromListOfRepetedBarcodes(barcodes);
 
@@ -37,9 +37,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             } else {
                 receiptProduct = new ReceiptProduct(product.getName(), cty, product.getPricePerUM());
             }
-            receiptDetailsResposne.addProduct(receiptProduct);
+            receiptDetailsResponse.addProduct(receiptProduct);
         }
-        return receiptDetailsResposne;
+        return receiptDetailsResponse;
     }
 
     @Override
