@@ -1,6 +1,5 @@
 package com.zavod.shoppingcartservice.controller;
 
-import com.zavod.shoppingcartservice.entity.Product;
 import com.zavod.shoppingcartservice.exception.NotFoundException;
 import com.zavod.shoppingcartservice.model.CheckProductResponse;
 import com.zavod.shoppingcartservice.model.ReceiptDetailsResponse;
