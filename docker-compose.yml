@@ -44,6 +44,7 @@ services:
       - shoppingcart_db
       - eureka-server
       - zuul-server
+      - auth-service
     links:
       - shoppingcart_db:shoppingcart_db
       - eureka-server:eureka-server
