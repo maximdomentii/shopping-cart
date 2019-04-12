@@ -11,6 +11,10 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>commons</module>
+		<module>eureka-server</module>
+		<module>zuul-server</module>
+		<module>auth-service</module>
 		<module>shopping-cart-service</module>
 	</modules>
 

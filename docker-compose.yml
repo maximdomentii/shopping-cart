@@ -1,17 +1,65 @@
 version: '3'
 
 services:
+  eureka-server:
+    image: shoppingcart/eureka-server:0.0.1-SNAPSHOT
+    container_name: eureka-server
+    build:
+      context: ./eureka-server/target/docker
+      dockerfile: Dockerfile
+    ports:
+    - 8761:8761
+
+  zuul-server:
+    image: shoppingcart/zuul-server:0.0.1-SNAPSHOT
+    build:
+      context: ./zuul-server/target/docker
+      dockerfile: Dockerfile
+    ports:
+      - 8762:8762
+    depends_on:
+      - eureka-server
+    links:
+      - eureka-server:eureka-server
+
+  auth-service:
+    image: shoppingcart/auth-service:0.0.1-SNAPSHOT
+    build:
+      context: ./auth-service/target/docker
+      dockerfile: Dockerfile
+    depends_on:
+      - shoppingcart_auth_db
+      - eureka-server
+      - zuul-server
+    links:
+      - eureka-server:eureka-server
+      - shoppingcart_auth_db:shoppingcart_auth_db
+
   shopping-cart-service:
     image: shoppingcart/shopping-cart-service:0.0.1-SNAPSHOT
     build:
         context: ./shopping-cart-service/target/docker
         dockerfile: Dockerfile
-    ports:
-      - 8100:8100
     depends_on:
       - shoppingcart_db
+      - eureka-server
+      - zuul-server
     links:
       - shoppingcart_db:shoppingcart_db
+      - eureka-server:eureka-server
+
+  shoppingcart_auth_db:
+    image: postgres
+    container_name: shoppingcart_auth_db
+    restart: always
+    environment:
+      POSTGRES_USER: shoppingcart_auth
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: shoppingcart_auth
+    expose:
+      - 5432
+    volumes:
+      - ./auth-service/src/main/resources/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   shoppingcart_db:
     image: postgres
@@ -21,10 +69,11 @@ services:
       POSTGRES_USER: shoppingcart
       POSTGRES_PASSWORD: 12345
       POSTGRES_DB: shoppingcart
-    ports:
-      - 5432:5432
+    expose:
+      - 5432
     volumes:
-      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./shopping-cart-service/src/main/resources/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
-  sql:
+  auth-service:
+  shopping-cart-service:
