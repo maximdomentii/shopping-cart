@@ -16,6 +16,7 @@
 		<module>zuul-server</module>
 		<module>auth-service</module>
 		<module>shopping-cart-service</module>
+		<!--<module>shopping-cart-client</module>-->
 	</modules>
 
 </project>

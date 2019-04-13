@@ -29,7 +29,6 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - shoppingcart_auth_db
-      - eureka-server
       - zuul-server
     links:
       - eureka-server:eureka-server
@@ -42,8 +41,6 @@ services:
         dockerfile: Dockerfile
     depends_on:
       - shoppingcart_db
-      - eureka-server
-      - zuul-server
       - auth-service
     links:
       - shoppingcart_db:shoppingcart_db
@@ -74,6 +71,9 @@ services:
       - 5432
     volumes:
       - ./shopping-cart-service/src/main/resources/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
+
 
 volumes:
   auth-service:
