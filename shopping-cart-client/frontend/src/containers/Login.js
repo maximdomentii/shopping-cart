@@ -26,20 +26,25 @@ export default class Login extends Component {
     }
 
     handleSubmit = event => {
+        var self = this;
         event.preventDefault();
 
         this.setState({ isLoading: true });
 
         try {
-            axios.post(`https://jsonplaceholder.typicode.com/users`, {
+            axios.post('auth', {
                 username: this.state.username,
                 password: this.state.password
             }).then(response => {
-                this.props.userHasAuthenticated(true, response.headers['Authorization']);
-                this.props.history.push("/");
-            })
+                //TODO: check if resposne status is 200, otherwise display error
+                axios.defaults.headers.common = {'Authorization': response.headers['Authorization']}
+                self.props.userHasAuthenticated(true);
+                self.props.history.push("/");
+            }).catch(function (error) {
+                console.log(error);
+                self.setState({ isLoading: false });
+            });
         } catch (e) {
-            this.props.userHasAuthenticated(false, "");
             this.setState({ isLoading: false });
         }
     }

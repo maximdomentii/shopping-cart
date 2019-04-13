@@ -12,6 +12,7 @@ services:
 
   zuul-server:
     image: shoppingcart/zuul-server:0.0.1-SNAPSHOT
+    container_name: zuul-server
     build:
       context: ./zuul-server/target/docker
       dockerfile: Dockerfile
@@ -72,8 +73,18 @@ services:
     volumes:
       - ./shopping-cart-service/src/main/resources/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-
-
+  shopping-cart-client:
+    image: shoppingcart/shopping-cart-client:0.0.1-SNAPSHOT
+    build:
+      context: ./shopping-cart-client/target/docker
+      dockerfile: Dockerfile
+    depends_on:
+    - auth-service
+    - shopping-cart-service
+    links:
+    - zuul-server:zuul-server
+    ports:
+    - 8080:8080
 
 volumes:
   auth-service:

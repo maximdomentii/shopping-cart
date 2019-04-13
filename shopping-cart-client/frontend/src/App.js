@@ -2,31 +2,31 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import axios from 'axios'
 import "./App.css";
 import Routes from "./Routes";
-import logo from './img/home.png';
 
 class App extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isAuthenticated: false,
-            token: ""
+            isAuthenticated: false
         };
+
+        axios.defaults.baseURL = 'http://localhost:8762/';
+        axios.defaults.headers.common = {'Content-Type': 'application/json'};
     }
 
-    userHasAuthenticated = (authenticated, token) => {
+    userHasAuthenticated = authenticated => {
         this.setState({
-            isAuthenticated: authenticated,
-            token: token
+            isAuthenticated: authenticated
         });
     }
 
     render() {
         const childProps = {
             isAuthenticated: this.state.isAuthenticated,
-            token: this.state.token,
             userHasAuthenticated: this.userHasAuthenticated
         };
 
