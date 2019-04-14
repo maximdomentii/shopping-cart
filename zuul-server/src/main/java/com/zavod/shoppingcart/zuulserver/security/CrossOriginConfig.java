@@ -16,6 +16,7 @@ public class CrossOriginConfig {
         return new WebMvcConfigurer() {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
+                        .exposedHeaders("Authorization")
                         .allowCredentials(true)
                         .allowedOrigins("*")
                         .allowedHeaders("*")

@@ -1,0 +1,38 @@
+@media all and (min-width: 480px) {
+    .Cart {
+        padding: 60px 0;
+    }
+
+    .Cart form {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+
+    .Cart .product-list {
+        padding: 10px 0;
+        margin: 0 auto;
+        max-width: 320px;
+    }
+    
+    .Cart .receipt {
+        padding: 10px;
+        margin: 0 auto;
+        max-width: 320px;
+        border: 1px solid gray;
+        border-radius: 6px;
+        background-color: beige;
+        padding: 10px;
+    }
+
+    .Cart .receipt .receipt-header {
+        text-align: center;
+    }
+
+    .Cart .receipt hr {
+        border-top: 1px solid gray;
+    }
+
+    .Cart .receipt .receipt-product hr {
+        border-top: 1px dashed gray;
+    }
+}

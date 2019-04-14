@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl } from "react-bootstrap";
 import axios from 'axios'
 import LoaderButton from "../components/LoaderButton";
 import "./Login.css";
@@ -31,22 +31,23 @@ export default class Login extends Component {
 
         this.setState({ isLoading: true });
 
-        try {
-            axios.post('auth', {
-                username: this.state.username,
-                password: this.state.password
-            }).then(response => {
-                //TODO: check if resposne status is 200, otherwise display error
-                axios.defaults.headers.common = {'Authorization': response.headers['Authorization']}
-                self.props.userHasAuthenticated(true);
-                self.props.history.push("/");
-            }).catch(function (error) {
-                console.log(error);
-                self.setState({ isLoading: false });
-            });
-        } catch (e) {
-            this.setState({ isLoading: false });
-        }
+        axios.post('auth', {
+            username: this.state.username,
+            password: this.state.password
+        }).then(response => {
+            self.props.setUserAuthentication(true, response.headers.authorization);
+            self.props.history.push("/");
+        }, function (error) {
+            self.setState({ isLoading: false });
+            if (error.response.status === 401){
+                alert("Invalid credentials!");
+            } else {
+                alert("Service temporally unavailable. Try again later!");
+            }
+        }).catch(function (error) {
+            console.error(error);
+            self.setState({ isLoading: false });
+        });
     }
 
     render() {
@@ -54,20 +55,20 @@ export default class Login extends Component {
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="username" bsSize="large">
-                        <ControlLabel>Username</ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
+                            placeholder="Username"
                             value={this.state.username}
                             onChange={this.handleChange}
                         />
                     </FormGroup>
                     <FormGroup controlId="password" bsSize="large">
-                        <ControlLabel>Password</ControlLabel>
                         <FormControl
                             value={this.state.password}
                             onChange={this.handleChange}
                             type="password"
+                            placeholder="Password"
                         />
                     </FormGroup>
                     <LoaderButton

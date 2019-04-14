@@ -7,7 +7,7 @@ export default class Home extends Component {
         return (
             <div className="Home">
                 <div className="lander-img">
-                    <img src={home_img}></img>
+                    <img src={home_img} alt={"R3PI"}></img>
                 </div>
                 <div className="lander-text">
                     <h1>Whelcome to Shopping Cart!</h1>

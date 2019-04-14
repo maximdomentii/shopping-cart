@@ -10,10 +10,10 @@ CREATE TABLE "public"."product"
 create index productbarcode_idx on product (barcode);
 
 insert into product values
-  (1, 6309095275545, 'Apple', 0.25, true),
-  (2, 7981950665189, 'Orange', 0.30, true),
-  (3, 5661412180652, 'Banana', 0.15, true),
-  (4, 6153569079331, 'Papaya', 0.50, true)
+  (1, 111, 'Apple', 0.25, true),
+  (2, 222, 'Orange', 0.30, true),
+  (3, 333, 'Banana', 0.15, true),
+  (4, 444, 'Papaya', 0.50, true)
 ;
 
 
