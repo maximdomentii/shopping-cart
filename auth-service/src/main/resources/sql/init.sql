@@ -25,11 +25,9 @@ REFERENCES "public"."user_authentication"(user_id)
 
 
 insert into user_authentication values
-  (1, true, 'cashier1', 'cashier1'),
-  (2, true, 'cashier2', 'cashier2')
+  (1, true, 'cashier', 'cashier')
 ;
 
 insert into user_authorization values
-  (1, 1, 'ROLE_CASHIER'),
-  (2, 2, 'ROLE_CASHIER')
+  (1, 1, 'ROLE_CASHIER')
 ;
