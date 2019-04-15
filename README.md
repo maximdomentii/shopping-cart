@@ -15,16 +15,16 @@ Simple application that calculates the price of a shopping basket.
 2. cd path_to_repo
 3. mvn clean install
 
-    <b>Note:</b> Make sure you can run 'docker ps' first. There can be a problem with permissions denied on docker if you just
-    installed is and using for the first time. If you have used docker before with current user on current machine
-    then should be fine.
+    <b>Note:</b> Make sure you can run 'docker ps' first. There can be a problem with permissions denied on docker if 
+    you just installed is and using for the first time. If you have used docker before with current user on current 
+    machine then should be fine.
  
  4. docker-compose up [--scale SERVICE_NAME=NUM_OF_INSTANCES]
  
-    <b>Note:</b> After all containers are up then you can check in the [Eureka dashboard](localhost:8761) registered services.
-    Login with admin/admin. You have to find the zuul-server, auth-service and shopping-cart-service.
+    <b>Note:</b> After all containers are up then you can check in the Eureka dashboard, at localhost:8761, 
+    registered services. Login with admin/admin. You have to find the zuul-server, auth-service and shopping-cart-service.
     
- 5. Now you can access the [Shopping Cart client](localhost:8080) to test the application or check the integration tests
+ 5. Now you can access the Shopping Cart client at localhost:8080 to test the application or check the integration tests
     from shopping-cart-service component. 
  
     <b>Note:</b> For the Shopping Cart client you will have to login with cashier/cashier.
