@@ -27,7 +27,9 @@ Simple application that calculates the price of a shopping basket.
  5. Now you can access the Shopping Cart client at localhost:8080 to test the application or check the integration tests
     from shopping-cart-service component. 
  
-    <b>Note:</b> For the Shopping Cart client you will have to login with cashier/cashier.
+    <b>Note:</b> For the Shopping Cart client you will have to login with cashier/cashier. If you get on login "Service
+    temporally unavailable. Try again later!" error then you have to wait few moments (~30s) until services will get
+    registreted with Eureka after deploy.
     
 ## Use case
 
